@@ -31,7 +31,8 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [adminReplyText, setAdminReplyText] = useState('');
   const [justSent, setJustSent] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
 
   // Guarantee uniqueness of message IDs to avoid duplicate key warnings
   const uniqueMessages = useMemo(() => {
@@ -43,13 +44,24 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
     });
   }, [messages]);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (smooth = true) => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: smooth ? 'smooth' : 'auto',
+      });
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [uniqueMessages, replyingToId]);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      // On initial mount / refresh, do NOT scroll smoothly and do NOT scroll outer page
+      scrollToBottom(false);
+      return;
+    }
+    scrollToBottom(true);
+  }, [uniqueMessages.length, replyingToId]);
 
   const handleUserSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,7 +123,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
       </div>
 
       {/* Messages List Container */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-50/50">
+      <div ref={messagesContainerRef} className="flex-1 p-4 overflow-y-auto space-y-3.5 bg-slate-50/50">
         {uniqueMessages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
             <HelpCircle className="w-8 h-8 text-slate-300 mb-2" />
@@ -228,7 +240,6 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
             </div>
           ))
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Success Notification */}

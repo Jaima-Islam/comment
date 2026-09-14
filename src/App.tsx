@@ -6,6 +6,7 @@ import { PostCard } from './components/PostCard';
 import { ChatSection } from './components/ChatSection';
 import { Footer } from './components/Footer';
 import { AdminPanelModal } from './components/AdminPanelModal';
+import { WorkUpJobInstructionBanner } from './components/WorkUpJobInstructionBanner';
 import {
   subscribePosts,
   subscribeChats,
@@ -130,6 +131,16 @@ export default function App() {
       unsubPosts();
       unsubChats();
     };
+  }, []);
+
+  // Ensure the page always stays at the top on initial load or page refresh
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    }
   }, []);
 
   // Persist state updates
@@ -404,6 +415,9 @@ export default function App() {
 
       {/* Main Content Layout */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Top Banner: WorkUpJob Comment Picture & Reply Instruction */}
+        <WorkUpJobInstructionBanner isAdmin={isAdmin} />
+
         {/* 2-Column Responsive Layout: Left = Admin Posts & Comments, Right = Chat Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Admin Comments & Quotes Feed */}
@@ -504,6 +518,28 @@ export default function App() {
                 )}
               </form>
             )}
+
+            {/* Header above comments requested by user */}
+            <div className="bg-gradient-to-r from-blue-50 via-indigo-50/50 to-blue-50 border-2 border-blue-200/90 rounded-2xl p-4 sm:p-5 shadow-xs flex items-center justify-between gap-3 flex-wrap sm:flex-nowrap">
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Copy className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-base sm:text-lg font-extrabold text-slate-900 leading-tight">
+                    এগুলো থেকে একটা কপি করুন এটা কমেন্ট
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+                    যেকোনো একটি কমেন্টের <span className="font-semibold text-blue-700">"কপি করুন"</span> বাটনে ক্লিক করে কপি করুন এবং নির্দিষ্ট লিংকে গিয়ে রিপ্লাই দিন।
+                  </p>
+                </div>
+              </div>
+              {activePosts.length > 0 && (
+                <span className="text-xs font-bold px-3.5 py-1.5 bg-white text-blue-700 border border-blue-200 rounded-full shrink-0 shadow-2xs">
+                  {activePosts.length}টি কমেন্ট উপলব্ধ
+                </span>
+              )}
+            </div>
 
             {/* Posts Feed */}
             <div className="space-y-5">
