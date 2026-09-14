@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Connection test document
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // Posts: anyone can read quotes/posts; updates & creations allowed
+    match /posts/{postId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Chats: anyone can read and send chat messages; admin can reply/delete
+    match /chats/{chatId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
