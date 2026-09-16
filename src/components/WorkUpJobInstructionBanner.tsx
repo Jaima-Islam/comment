@@ -164,60 +164,129 @@ export const WorkUpJobInstructionBanner: React.FC<WorkUpJobInstructionBannerProp
           </div>
         </div>
 
-        {/* Text Instruction below the picture as requested by user */}
-        <div className="bg-blue-50/90 border border-blue-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
-          <div className="space-y-1.5 text-center sm:text-left w-full sm:w-auto">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-blue-100/80 text-blue-800 text-xs font-bold">
-              <MessageCircle className="w-3.5 h-3.5 text-blue-600" />
-              <span>নির্দেশনা:</span>
+        {/* 4-Step Instructions as requested by user */}
+        <div className="bg-gradient-to-b from-blue-50/90 to-indigo-50/60 border-2 border-blue-200/90 rounded-xl sm:rounded-2xl p-4 sm:p-6 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between gap-2 border-b border-blue-200/60 pb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-600 text-white text-xs sm:text-sm font-bold shadow-2xs">
+              <MessageCircle className="w-4 h-4" />
+              <span>কাজের নির্দেশনা (Step-by-Step):</span>
             </div>
-
-            <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-              এই লিংকে গিয়ে আপনার কপি করা কমেন্ট টা আমার কমেন্টে রিপ্লাই দেন —{' '}
-              <span className="text-blue-700 font-extrabold">digital shop</span>
-            </h3>
-
-            <p className="text-xs sm:text-sm text-slate-600">
-              নিচের উক্তিগুলো থেকে ১-ক্লিকে কপি করে এই নির্দিষ্ট লিংকে গিয়ে আমার কমেন্টের নিচে রিপ্লাই করুন।
-            </p>
-
-            <div className="pt-1 flex items-center gap-2 overflow-hidden text-xs text-blue-900 font-mono bg-white px-3 py-1.5 rounded-lg border border-blue-200 max-w-full">
-              <Link2 className="w-4 h-4 shrink-0 text-blue-600" />
-              <span className="truncate select-all font-medium">{targetLink}</span>
-            </div>
+            <span className="text-xs text-blue-700 font-medium hidden sm:inline">
+              নিচের ধাপগুলো সঠিকভাবে অনুসরণ করুন
+            </span>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex items-center gap-2.5 shrink-0 flex-wrap justify-center w-full sm:w-auto">
-            <a
-              id="workupjob-banner-link-btn"
-              href={targetLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs sm:text-sm font-bold rounded-xl transition-all shadow-sm hover:shadow cursor-pointer"
-            >
-              <span>এই লিংকে যান</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
+          <div className="space-y-3.5 text-slate-800 text-xs sm:text-sm leading-relaxed">
+            {/* Step 1 */}
+            <div className="p-3 bg-white border border-blue-100 rounded-xl shadow-2xs space-y-2.5">
+              <div className="flex items-start gap-2.5">
+                <span className="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                  ১
+                </span>
+                <div className="flex-1">
+                  <p className="font-bold text-slate-900 text-sm">
+                    কাজটি সম্পন্ন করতে লিঙ্কটি ভিজিট করুন।
+                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    নিচের লিংকে ক্লিক করুন অথবা বাটন ব্যবহার করে সরাসরি সাইটে প্রবেশ করুন:
+                  </p>
+                </div>
+              </div>
 
-            <button
-              id="workupjob-copy-link-btn"
-              onClick={handleCopyLink}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-xs sm:text-sm font-bold rounded-xl transition-colors cursor-pointer shadow-xs"
-              title="লিংক কপি করুন"
-            >
-              {copiedLink ? (
-                <>
-                  <Check className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700 font-bold">কপি হয়েছে</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4 text-slate-500" />
-                  <span>লিংক কপি</span>
-                </>
-              )}
-            </button>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pl-0 sm:pl-8">
+                <div className="flex items-center gap-2 overflow-hidden text-xs text-blue-900 font-mono bg-blue-50 px-3 py-2 rounded-lg border border-blue-200 flex-1">
+                  <Link2 className="w-4 h-4 shrink-0 text-blue-600" />
+                  <a
+                    href={targetLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="truncate hover:underline text-blue-700 font-medium select-all"
+                  >
+                    {targetLink}
+                  </a>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    id="workupjob-banner-link-btn"
+                    href={targetLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xs font-bold rounded-lg transition-all shadow-2xs cursor-pointer"
+                  >
+                    <span>এই লিংকে যান</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+
+                  <button
+                    id="workupjob-copy-link-btn"
+                    onClick={handleCopyLink}
+                    className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-xs font-bold rounded-lg transition-colors cursor-pointer shadow-2xs"
+                    title="লিংক কপি করুন"
+                  >
+                    {copiedLink ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-emerald-700">কপি হয়েছে</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5 text-slate-500" />
+                        <span>লিংক কপি</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="p-3 bg-white border border-blue-100 rounded-xl shadow-2xs flex items-start gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                ২
+              </span>
+              <div className="flex-1">
+                <p className="font-semibold text-slate-900 text-xs sm:text-sm">
+                  কমেন্ট সেকশনে যান এবং আমার কমেন্টটি খুঁজে বের করুন:{' '}
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-blue-100 text-blue-800 font-extrabold text-sm border border-blue-200">
+                    “Digital Shop”
+                  </span>
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  (উপরের ছবির মতো কমেন্টটি খুঁজবেন)
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="p-3 bg-white border border-blue-100 rounded-xl shadow-2xs flex items-start gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                ৩
+              </span>
+              <div className="flex-1">
+                <p className="font-semibold text-slate-900 text-xs sm:text-sm">
+                  এখানে নিচে থেকে একটা কমেন্ট কপি করেন।এবং আমার কমেন্টে রিপ্লাই দেন।
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  নিচের কমেন্ট তালিকা থেকে যেকোনো একটি পছন্দের কমেন্টে "কপি করুন" চেপে কপি করে রিপ্লাই বক্সে পেস্ট করুন।
+                </p>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="p-3.5 bg-amber-50/90 border-2 border-amber-300/80 rounded-xl shadow-2xs flex items-start gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-amber-600 text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                ৪
+              </span>
+              <div className="flex-1">
+                <p className="font-bold text-amber-950 text-xs sm:text-sm">
+                  যারা একবার কাজ করেছেন, তারা নতুন Gmail দিয়ে কাজ করবেন।✅❗❗
+                </p>
+                <p className="text-xs text-amber-800 mt-0.5">
+                  আগের জিমেইল ব্যবহার করলে কাজটি বাতিল হতে পারে, তাই প্রতিবার নতুন জিমেইল ব্যবহার করুন।
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
